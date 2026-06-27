@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ZABS Place — Look beyond. Find potential.</title>
+<!-- Saira = on-brand stand-in for Eurostile (brand headline font); Jura = real ZABS display accent; Manrope ~ Roc Grotesk body -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@600;700;800;900&family=Jura:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --blue:#0197bd; --blue-deep:#01637c; --navy:#0d1c2c; --sky:#b6dfeb;
+    --orange:#f08649; --cream:#fbf4e9; --skytint:#edf6f9; --white:#fff;
+    --ink:#0d1c2c; --muted:#51616c;
+    --shadow:0 22px 48px -22px rgba(13,28,44,.34);
+    --display:'Saira',system-ui,sans-serif;
+    --accent:'Jura',system-ui,sans-serif;
+    --body:'Manrope',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1200px,92vw);margin-inline:auto}
+  .display{font-family:var(--display);font-weight:800;letter-spacing:-.015em;line-height:1}
+  section{position:relative}
+
+  .mark{position:relative;white-space:nowrap}
+  .mark>span{position:relative;z-index:1}
+  .mark::after{content:"";position:absolute;left:-.1em;right:-.1em;bottom:.04em;height:.46em;background:var(--orange);z-index:0;border-radius:5px;transform:rotate(-1.4deg)}
+  .mark.sky::after{background:var(--sky)}
+  .doodle{position:absolute;pointer-events:none;z-index:2}
+
+  /* ---------- announcement bar ---------- */
+  .topbar{background:var(--navy);color:#dce8ee;font-size:.82rem}
+  .topbar .wrap{display:flex;gap:1rem;justify-content:space-between;align-items:center;padding:.55rem 0;flex-wrap:wrap}
+  .topbar b{color:#fff} .topbar a{color:var(--orange);font-weight:700}
+  .topbar a:hover{text-decoration:underline}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:40;background:rgba(251,244,233,.9);backdrop-filter:blur(8px);border-bottom:1px solid #ece0cd}
+  .nav{display:flex;align-items:center;gap:1.4rem;padding:.8rem 0}
+  .brand{font-family:var(--display);font-weight:900;font-size:1.55rem;color:var(--orange);display:flex;align-items:center;gap:.5rem;line-height:1;text-transform:lowercase}
+  .brand .zmark{width:36px;height:36px;border-radius:10px;background:var(--blue);color:var(--orange);display:grid;place-items:center;font-weight:900;font-size:1.3rem;transform:rotate(-4deg)}
+  nav.links{display:flex;gap:1.3rem;margin-left:auto;font-family:var(--accent);font-weight:700;font-size:1rem;color:var(--navy)}
+  nav.links a{padding:.2rem 0;border-bottom:3px solid transparent}
+  nav.links a:hover{border-color:var(--orange);color:var(--blue-deep)}
+  .btn{font-family:var(--display);font-weight:800;border-radius:999px;padding:.72rem 1.4rem;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:2.5px solid transparent;font-size:1rem;transition:transform .12s ease,box-shadow .12s ease;text-transform:uppercase;letter-spacing:.02em}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-orange{background:var(--orange);color:#fff;box-shadow:0 12px 24px -10px rgba(240,134,73,.95)}
+  .btn-outline{background:transparent;color:var(--navy);border-color:var(--navy)}
+  .btn-white{background:#fff;color:var(--navy)} .btn-white:hover{box-shadow:var(--shadow)}
+  .burger{display:none}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(2.2rem,5vw,4.2rem) 0 clamp(3rem,7vw,5rem)}
+  .hero .wrap{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(1.5rem,5vw,4.2rem);align-items:center;position:relative;z-index:2}
+  .eyebrow{font-family:var(--accent);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.8rem;color:var(--blue-deep);display:inline-flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;background:#fff;padding:.45rem .9rem;border-radius:999px;box-shadow:0 6px 16px -10px rgba(13,28,44,.4)}
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--orange)}
+  h1{font-size:clamp(2.9rem,6.4vw,5.1rem);color:var(--navy)}
+  .lede{font-size:1.2rem;color:var(--muted);max-width:35ch;margin:1.6rem 0 0}
+  .lede b{color:var(--navy);font-weight:800}
+  .cta-row{display:flex;gap:.85rem;flex-wrap:wrap;margin-top:2.1rem}
+  .proof{display:flex;align-items:center;gap:.7rem;margin-top:2.1rem;font-size:.92rem;color:var(--muted)}
+  .proof .stars{color:var(--orange);letter-spacing:.08em;font-size:1.1rem}
+  .proof b{color:var(--navy);font-weight:800}
+  .hero-art{position:relative;min-height:420px}
+  .pola{background:#fff;padding:10px 10px 14px;border-radius:8px;box-shadow:var(--shadow)}
+  .pola img{width:100%;height:100%;object-fit:cover;border-radius:3px;display:block}
+  .pola.main{position:relative;transform:rotate(-2.5deg);z-index:2}
+  .pola.main img{aspect-ratio:3/2}
+  .pola.mini{position:absolute;width:40%;right:-18px;bottom:-30px;transform:rotate(6deg);z-index:3}
+  .pola.mini img{aspect-ratio:1/1}
+  .blob{position:absolute;z-index:0;width:115%;left:-7%;top:-8%;height:118%;background:radial-gradient(60% 55% at 60% 45%, rgba(182,223,235,.85), rgba(182,223,235,0) 70%)}
+  .badge{position:absolute;left:-30px;top:-26px;background:var(--blue);color:#fff;font-family:var(--display);font-weight:800;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;text-align:center;font-size:.8rem;line-height:1.12;transform:rotate(-10deg);box-shadow:var(--shadow);z-index:4;text-transform:uppercase;letter-spacing:.03em}
+  .badge span{color:#ffe0c9}
+  .d-star{top:6px;right:8%;width:46px;color:var(--orange)}
+  .d-squig{left:38%;bottom:-30px;width:120px;color:var(--blue-deep)}
+
+  /* ---------- scallop dividers ---------- */
+  .scallop{line-height:0;position:relative;z-index:1}
+  .scallop svg{width:100%;height:54px;display:block}
+
+  /* ---------- FOUR WAYS ---------- */
+  .ways{background:var(--navy);padding:clamp(2.6rem,6vw,4rem) 0 clamp(3.4rem,8vw,5rem);color:#fff}
+  .ways .d-bg1{top:8%;left:4%;width:70px;color:rgba(255,255,255,.16)}
+  .ways .d-bg2{bottom:12%;right:5%;width:96px;color:rgba(255,255,255,.13)}
+  .sec-head{text-align:center;max-width:46rem;margin:0 auto clamp(2rem,4vw,3rem);position:relative;z-index:2}
+  .kick{font-family:var(--accent);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.82rem;margin-bottom:.8rem}
+  .ways .kick{color:var(--sky)}
+  .sec-head h2{font-size:clamp(2.2rem,5vw,3.5rem)}
+  .ways .sec-head h2{color:#fff} .ways .sec-head p{color:#bcd4de;font-size:1.1rem;margin-top:1rem}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;position:relative;z-index:2}
+  .card{position:relative;border-radius:22px;padding:1.4rem 1.3rem 1.5rem;display:flex;flex-direction:column;color:#fff;min-height:430px;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 16px 30px -18px rgba(0,0,0,.55)}
+  .card:nth-child(odd){transform:translateY(-14px)}
+  .card:hover{transform:translateY(-24px);box-shadow:0 30px 50px -22px rgba(0,0,0,.6)}
+  .c1{background:var(--orange)} .c2{background:var(--blue)} .c3{background:var(--blue-deep)} .c4{background:#15324a}
+  .c1,.c2{color:var(--navy)} .c1 p,.c2 p{color:rgba(13,28,44,.84)} .c1 .num,.c2 .num{color:rgba(13,28,44,.17)}
+  .card .num{font-family:var(--display);font-weight:900;font-size:4.2rem;line-height:.8;color:rgba(255,255,255,.22);position:absolute;right:14px;top:8px}
+  .card .pp{background:#fff;padding:7px 7px 9px;border-radius:7px;box-shadow:0 12px 22px -12px rgba(0,0,0,.5);width:78%;transform:rotate(-2.4deg);margin-bottom:1.05rem}
+  .card:nth-child(even) .pp{transform:rotate(2.4deg)}
+  .card .pp img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:3px}
+  .card h3{font-family:var(--display);font-weight:800;font-size:1.5rem;line-height:1.02;margin-bottom:.45rem;letter-spacing:-.01em}
+  .card p{color:rgba(255,255,255,.92);font-size:.98rem;line-height:1.42;margin-bottom:1.1rem}
+  .card .pill{margin-top:auto;align-self:flex-start;background:#fff;color:var(--navy);font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:.82rem;padding:.6rem 1.05rem;border-radius:999px;display:inline-flex;align-items:center;gap:.45rem;transition:gap .15s ease}
+  .card .pill svg{width:15px} .card:hover .pill{gap:.75rem} .c1 .pill{color:#b8480f}
+
+  /* ---------- MISSION ---------- */
+  .mission{background:var(--cream);padding:clamp(3rem,7vw,5rem) 0}
+  .mission .wrap{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(1.6rem,5vw,4rem);align-items:center}
+  .mission .kick{color:var(--blue-deep)}
+  .mission h2{font-size:clamp(2.1rem,4.6vw,3.2rem);color:var(--navy)}
+  .mission .body{font-size:1.1rem;color:var(--muted);margin-top:1.2rem;max-width:46ch}
+  .mission .body b{color:var(--navy);font-weight:800}
+  .stats{display:flex;gap:2.2rem;margin-top:2rem;flex-wrap:wrap}
+  .stat .n{font-family:var(--display);font-weight:900;font-size:2.5rem;color:var(--orange);line-height:1}
+  .stat .l{font-size:.9rem;color:var(--muted);font-weight:600;margin-top:.2rem}
+  .mission-art{position:relative}
+  .mission-art .pola.main{transform:rotate(2deg)}
+  .mission-art .pola.main img{aspect-ratio:4/3}
+  .mission-art .badge{right:-26px;left:auto;top:auto;bottom:-26px;background:var(--orange);transform:rotate(8deg)}
+  .mission-art .badge span{color:#fff}
+  .mission-art .d-star{top:-22px;left:-18px;right:auto;color:var(--blue)}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{background:var(--skytint);padding:clamp(3rem,7vw,5rem) 0}
+  .how .kick{color:var(--blue-deep)} .how .sec-head h2{color:var(--navy)} .how .sec-head p{color:var(--muted);font-size:1.1rem;margin-top:1rem}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;position:relative}
+  .step{background:#fff;border-radius:18px;padding:1.6rem 1.3rem;text-align:center;box-shadow:0 16px 30px -22px rgba(13,28,44,.4);position:relative}
+  .step .sn{width:54px;height:54px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--display);font-weight:900;font-size:1.4rem;display:grid;place-items:center;margin:0 auto .9rem}
+  .step:nth-child(1) .sn{background:var(--orange)} .step:nth-child(2) .sn{background:var(--blue)}
+  .step:nth-child(3) .sn{background:var(--blue-deep)} .step:nth-child(4) .sn{background:var(--navy)}
+  .step h4{font-family:var(--display);font-weight:800;font-size:1.18rem;color:var(--navy);margin-bottom:.4rem}
+  .step p{font-size:.94rem;color:var(--muted)}
+  .step .conn{position:absolute;right:-1rem;top:46px;width:2rem;color:var(--blue);z-index:3}
+
+  /* ---------- PROOF ---------- */
+  .proof-sec{background:var(--cream);padding:clamp(3rem,7vw,5rem) 0}
+  .proof-sec .kick{color:var(--blue-deep);text-align:center} .proof-sec h2{text-align:center;font-size:clamp(2rem,4.4vw,3rem);color:var(--navy)}
+  .logos{display:flex;flex-wrap:wrap;gap:1.4rem 2.6rem;justify-content:center;align-items:center;margin:2rem auto 0;max-width:50rem}
+  .logos span{font-family:var(--display);font-weight:800;font-size:1.4rem;color:#9aa7b0;letter-spacing:.01em}
+  .quote{background:#fff;border-radius:22px;box-shadow:var(--shadow);margin-top:2.6rem;display:grid;grid-template-columns:280px 1fr;overflow:hidden;max-width:60rem;margin-inline:auto}
+  .quote .qimg img{width:100%;height:100%;object-fit:cover;min-height:280px}
+  .quote .qbody{padding:clamp(1.6rem,3vw,2.6rem)}
+  .quote .qmark{font-family:var(--display);font-weight:900;color:var(--orange);font-size:3rem;line-height:.6}
+  .quote blockquote{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.4vw,1.7rem);color:var(--navy);line-height:1.2;margin:.4rem 0 1.1rem}
+  .quote .who{font-weight:700;color:var(--blue-deep)} .quote .who small{display:block;color:var(--muted);font-weight:500}
+
+  /* ---------- VISIT ---------- */
+  .visit{background:#fff;padding:clamp(3rem,7vw,5rem) 0}
+  .visit .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(1.6rem,5vw,3.4rem);align-items:center}
+  .visit-art .pola.main{transform:rotate(-2deg)} .visit-art .pola.main img{aspect-ratio:4/3}
+  .visit .kick{color:var(--blue-deep)} .visit h2{font-size:clamp(2.1rem,4.6vw,3.2rem);color:var(--navy)}
+  .infos{margin-top:1.4rem;display:flex;flex-direction:column;gap:1rem}
+  .info{display:flex;gap:.8rem;align-items:flex-start}
+  .info .ic{flex:none;width:42px;height:42px;border-radius:12px;background:var(--skytint);color:var(--blue-deep);display:grid;place-items:center}
+  .info .ic svg{width:20px} .info b{color:var(--navy);font-family:var(--display);font-weight:800;display:block}
+  .info span{color:var(--muted)}
+  .visit .btn{margin-top:1.6rem}
+
+  /* ---------- NEWSLETTER ---------- */
+  .news{background:var(--orange);padding:clamp(2.6rem,6vw,4rem) 0;color:var(--navy);text-align:center;position:relative;overflow:hidden}
+  .news .d-bg1{top:18%;left:7%;width:70px;color:rgba(13,28,44,.16)} .news .d-bg2{bottom:14%;right:8%;width:90px;color:rgba(13,28,44,.14)}
+  .news h2{font-size:clamp(2rem,4.6vw,3rem);position:relative;z-index:2}
+  .news p{max-width:40ch;margin:.9rem auto 0;color:rgba(13,28,44,.8);font-size:1.08rem;position:relative;z-index:2}
+  .signup{display:flex;gap:.6rem;max-width:30rem;margin:1.6rem auto 0;position:relative;z-index:2}
+  .signup input{flex:1;border:0;border-radius:999px;padding:.85rem 1.3rem;font-family:var(--body);font-size:1rem;background:#fff;color:var(--navy)}
+  .signup .btn{background:var(--navy);color:#fff}
+
+  /* ---------- SOCIALS ---------- */
+  .socials{background:var(--cream);padding:clamp(2.6rem,6vw,4rem) 0;text-align:center}
+  .socials .kick{color:var(--blue-deep)} .socials h2{font-size:clamp(1.7rem,3.6vw,2.4rem);color:var(--navy)}
+  .socials .handle{color:var(--orange);font-weight:800;margin-top:.4rem}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.8rem}
+  .tiles a{border-radius:16px;overflow:hidden;position:relative;display:block;box-shadow:0 14px 26px -20px rgba(13,28,44,.5)}
+  .tiles img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .4s ease}
+  .tiles a:hover img{transform:scale(1.06)}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy);color:#aebecb;padding:clamp(2.6rem,6vw,4rem) 0 1.6rem}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2rem}
+  .fbrand .brand{margin-bottom:.9rem}
+  .fbrand p{max-width:30ch;font-size:.95rem}
+  .fcol h5{font-family:var(--display);font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;margin-bottom:.9rem}
+  .fcol a{display:block;padding:.28rem 0;color:#aebecb;font-size:.96rem}
+  .fcol a:hover{color:var(--orange)}
+  .fam{margin-top:1.2rem;display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:.5rem .9rem;border-radius:12px;font-size:.9rem}
+  .fam b{color:#fff}
+  .fbot{border-top:1px solid rgba(255,255,255,.12);margin-top:2.2rem;padding-top:1.3rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.85rem;color:#7f95a3}
+  .fsoc{display:flex;gap:.6rem}
+  .fsoc a{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#fff}
+  .fsoc a:hover{background:var(--orange)}
+  .fsoc svg{width:18px}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:1000px){
+    .cards,.steps{grid-template-columns:repeat(2,1fr);gap:1.1rem}
+    .card:nth-child(odd),.card:nth-child(even){transform:none} .card:hover{transform:translateY(-8px)}
+    .step .conn{display:none}
+    .hero .wrap,.mission .wrap,.visit .wrap{grid-template-columns:1fr}
+    .hero-art{order:-1;max-width:540px;margin-bottom:1.4rem}
+    .mission-art,.visit-art{max-width:560px}
+    .quote{grid-template-columns:1fr} .quote .qimg img{min-height:240px;max-height:320px}
+    .tiles{grid-template-columns:repeat(2,1fr)}
+    .fgrid{grid-template-columns:1fr 1fr}
+    nav.links,.nav .btn-outline{display:none}
+  }
+  @media(max-width:560px){
+    .cards,.steps,.tiles{grid-template-columns:1fr;max-width:400px;margin-inline:auto}
+    .card{min-height:0}
+    .topbar .wrap{justify-content:center;text-align:center}
+    .badge{width:84px;height:84px;font-size:.7rem;left:-12px}
+    .pola.mini{width:46%}
+    .signup{flex-direction:column}
+    .fgrid{grid-template-columns:1fr;gap:1.6rem}
+    .burger{display:inline-grid;place-items:center;margin-left:auto;width:46px;height:46px;border-radius:12px;background:var(--navy);color:#fff;font-size:1.35rem}
+    .nav .btn-orange{display:none}
+  }
+</style>
+</head>
+<body>
+
+  <!-- announcement bar -->
+  <div class="topbar"><div class="wrap">
+    <span>📍 <b>100 N Trade St, Matthews NC</b> &nbsp;·&nbsp; Open Tue–Sat, 10–6</span>
+    <span>Fresh <b>#ZABSstealz</b> just hit the racks — <a href="#shop">come dig in →</a></span>
+  </div></div>
+
+  <!-- header -->
+  <header><div class="wrap nav">
+    <a class="brand" href="#"><span class="zmark">Z</span>zabs place</a>
+    <nav class="links"><a href="#shop">Shop</a><a href="#give">Donate</a><a href="#mission">Our Mission</a><a href="#apply">Apply</a><a href="#visit">Visit</a></nav>
+    <a class="btn btn-outline" href="#apply">Apply</a>
+    <a class="btn btn-orange" href="#give">Donate</a>
+    <button class="burger" aria-label="Menu">☰</button>
+  </div></header>
+
+  <!-- hero -->
+  <section class="hero"><div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow"><span class="dot"></span> Matthews, NC · Nonprofit thrift boutique</span>
+      <h1 class="display">Look beyond.<br/><span class="mark"><span>Find potential.</span></span></h1>
+      <p class="lede">A thrift store with a bigger job: <b>every purchase and donation helps young
+        adults with special needs train for real careers.</b></p>
+      <div class="cta-row">
+        <a class="btn btn-orange" href="#shop">Shop the Boutique</a>
+        <a class="btn btn-outline" href="#apply">Apply to the Program</a>
+      </div>
+      <div class="proof"><span class="stars">★★★★★</span>
+        <span><b>Hired by</b> Lowe's · Harris Teeter · NASCAR Hall of Fame</span></div>
+    </div>
+    <div class="hero-art">
+      <div class="blob"></div>
+      <div class="pola main">
+        <img src="assets/hero.jpg" alt="A young adult laughing while working among the clothing racks at ZABS Place" />
+        <div class="pola mini"><img src="assets/hero-2.jpg" alt="A ZABS Place trainee speaking confidently" /></div>
+      </div>
+      <div class="badge">100%<br/><span>nonprofit</span><br/>thrift</div>
+      <svg class="doodle d-star" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M25 5v15M25 30v15M5 25h15M30 25h15"/></svg>
+      <svg class="doodle d-squig" viewBox="0 0 120 28" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M3 16c10-14 22-14 32 0s22 14 32 0 22-14 32 0"/></svg>
+    </div>
+  </div></section>
+
+  <div class="scallop"><svg viewBox="0 0 1440 54" preserveAspectRatio="none"><path fill="#0d1c2c" d="M0 54h1440V20c-60 18-120 18-180 4S1140 2 1080 16s-120 22-180 8S780 2 720 16 600 38 540 24 420 2 360 16 240 38 180 24 60 4 0 20Z"/></svg></div>
+
+  <!-- FOUR WAYS -->
+  <section class="ways" id="shop">
+    <svg class="doodle d-bg1" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M25 5v15M25 30v15M5 25h15M30 25h15"/></svg>
+    <svg class="doodle d-bg2" viewBox="0 0 90 40" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c22 26 50 30 82 20"/><path d="M73 16l12 12-16 4"/></svg>
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kick">Four ways in</div>
+        <h2 class="display">Pick your kind of <span class="mark"><span>good.</span></span></h2>
+        <p>Shop it, stock it, fund it, or join it — every door leads to a career for a young adult the world too often overlooks.</p>
+      </div>
+      <div class="cards">
+        <article class="card c1"><span class="num">01</span>
+          <div class="pp"><img src="assets/card-shop.jpg" alt="A vintage carousel horse for sale at the ZABS Place thrift boutique" /></div>
+          <h3>Shop the Boutique</h3><p>One person's castoff is another's treasure — and every tag funds the mission.</p>
+          <a class="pill" href="#">Find your stealz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></article>
+        <article class="card c2" id="give"><span class="num">02</span>
+          <div class="pp"><img src="assets/card-donate-goods.jpg" alt="A lamp and dressed mannequin among donated goods at ZABS Place" /></div>
+          <h3>Donate Your Stuff</h3><p>Turn your closet clean-out into someone's first paycheck.</p>
+          <a class="pill" href="#">Donate goods <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></article>
+        <article class="card c3"><span class="num">03</span>
+          <div class="pp"><img src="assets/card-give.jpg" alt="Two people connecting and smiling at ZABS Place" /></div>
+          <h3>Give to the Mission</h3><p>Fuel the job training that turns potential into a paycheck.</p>
+          <a class="pill" href="#">Donate now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></article>
+        <article class="card c4" id="apply"><span class="num">04</span>
+          <div class="pp"><img src="assets/card-apply.jpg" alt="A smiling young adult ready to join the ZABS Place program" /></div>
+          <h3>Apply to the Program</h3><p>Never had a job? Perfect. Let's build your first one together.</p>
+          <a class="pill" href="#">Start applying <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission" id="mission"><div class="wrap">
+    <div class="mission-copy">
+      <div class="kick">What is ZABS Place?</div>
+      <h2 class="display">More than a thrift store. A <span class="mark sky"><span>launchpad.</span></span></h2>
+      <p class="body">We're a nonprofit boutique in downtown Matthews where the shelves are stocked with
+        secondhand treasures — and staffed by young adults with special needs learning to work.
+        <b>Every shift builds confidence, real skills, and a résumé</b> that lands them careers with
+        employers across Charlotte. Where others see "secondhand," we see what's possible.</p>
+      <!-- NOTE: stat numbers below are placeholders — confirm real figures with ZABS. -->
+      <div class="stats">
+        <div class="stat"><div class="n">200+</div><div class="l">young adults trained</div></div>
+        <div class="stat"><div class="n">75+</div><div class="l">hiring partners</div></div>
+        <div class="stat"><div class="n">10k+</div><div class="l">items rehomed yearly</div></div>
+      </div>
+    </div>
+    <div class="mission-art">
+      <div class="pola main"><img src="assets/mission.jpg" alt="A ZABS Place team member mentoring a trainee on the shop floor" /></div>
+      <div class="badge">Look<br/>beyond<span> ✦</span></div>
+      <svg class="doodle d-star" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M25 5v15M25 30v15M5 25h15M30 25h15"/></svg>
+    </div>
+  </div></section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how"><div class="wrap">
+    <div class="sec-head">
+      <div class="kick">The journey</div>
+      <h2 class="display">From the racks to a <span class="mark"><span>real career.</span></span></h2>
+      <p>Our Sam Ebersman Job Training Program walks every trainee from first day to first paycheck.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><h4>Apply &amp; Join</h4><p>A warm, low-pressure application — no résumé or job history needed.</p>
+        <svg class="conn" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h24M20 6l8 6-8 6"/></svg></div>
+      <div class="step"><div class="sn">2</div><h4>Train on the Job</h4><p>Hands-on shifts in the boutique — sorting, styling, selling, serving.</p>
+        <svg class="conn" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h24M20 6l8 6-8 6"/></svg></div>
+      <div class="step"><div class="sn">3</div><h4>Build Skills</h4><p>Coaching on the soft skills, confidence, and independence employers want.</p>
+        <svg class="conn" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h24M20 6l8 6-8 6"/></svg></div>
+      <div class="step"><div class="sn">4</div><h4>Get Hired</h4><p>We connect grads with local employers ready to welcome their talents.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PROOF -->
+  <section class="proof-sec"><div class="wrap">
+    <div class="kick">Who hired a ZABS grad?</div>
+    <h2 class="display">Real jobs. Real employers.</h2>
+    <!-- NOTE: text wordmarks stand in for real partner logos -->
+    <div class="logos"><span>Lowe's</span><span>Harris Teeter</span><span>NASCAR Hall of Fame</span><span>Novant Health</span><span>Food Lion</span></div>
+    <div class="quote">
+      <div class="qimg"><img src="assets/grad.jpg" alt="A ZABS Place graduate at work" /></div>
+      <div class="qbody">
+        <div class="qmark">“</div>
+        <blockquote>I never thought I'd have a job I love. ZABS believed in me before anyone else did — now my boss does too.</blockquote>
+        <div class="who">A ZABS Place graduate <small>Now employed in Matthews, NC</small></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- VISIT -->
+  <section class="visit" id="visit"><div class="wrap">
+    <div class="visit-art">
+      <div class="pola main"><img src="assets/visit.jpg" alt="The ZABS Place storefront in downtown Matthews, NC" /></div>
+    </div>
+    <div class="visit-copy">
+      <div class="kick">Come see us</div>
+      <h2 class="display">Find your next <span class="mark sky"><span>treasure.</span></span></h2>
+      <div class="infos">
+        <div class="info"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><b>100 North Trade Street</b><span>Matthews, NC 28105</span></div></div>
+        <div class="info"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div><b>Tuesday – Saturday</b><span>10:00 AM – 6:00 PM · Closed Sun &amp; Mon</span></div></div>
+        <div class="info"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 18Z"/></svg></div>
+          <div><b>Donations welcome</b><span>Drop off gently-used goods during open hours</span></div></div>
+      </div>
+      <a class="btn btn-orange" href="#">Get directions</a>
+    </div>
+  </div></section>
+
+  <!-- NEWSLETTER -->
+  <section class="news">
+    <svg class="doodle d-bg1" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M25 5v15M25 30v15M5 25h15M30 25h15"/></svg>
+    <svg class="doodle d-bg2" viewBox="0 0 90 40" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8c22 26 50 30 82 20"/><path d="M73 16l12 12-16 4"/></svg>
+    <div class="wrap">
+      <h2 class="display">Get the freshest <span class="mark sky"><span>#ZABSstealz.</span></span></h2>
+      <p>New arrivals, good-news stories, and the occasional happy dance — straight to your inbox.</p>
+      <form class="signup" onsubmit="return false">
+        <input type="email" placeholder="you@email.com" aria-label="Email address" />
+        <button class="btn">Keep me posted</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- SOCIALS -->
+  <section class="socials"><div class="wrap">
+    <div class="kick">Slide into our socials</div>
+    <h2 class="display">See the potential in action</h2>
+    <div class="handle">@zabsplace</div>
+    <div class="tiles">
+      <a href="#"><img src="assets/soc1.jpg" alt="ZABS Place 'look beyond, find potential' tee" /></a>
+      <a href="#"><img src="assets/soc2.jpg" alt="ZABS Place branded mug" /></a>
+      <a href="#"><img src="assets/soc3.jpg" alt="The ZABS Place storefront sign" /></a>
+      <a href="#"><img src="assets/soc4.jpg" alt="A ZABS Place tote bag" /></a>
+    </div>
+  </div></section>
+
+  <!-- FOOTER -->
+  <footer><div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand">
+        <a class="brand" href="#"><span class="zmark">Z</span>zabs place</a>
+        <p>A nonprofit thrift boutique training young adults with special needs for real careers. Where potential is found.</p>
+        <div class="fam">Part of the <b>ZABS&nbsp;Place&nbsp;+&nbsp;Cakeable</b> family</div>
+      </div>
+      <div class="fcol"><h5>Shop</h5><a href="#">The Boutique</a><a href="#">New Arrivals</a><a href="#">Visit In-Store</a><a href="#">Hire a ZABS Grad</a></div>
+      <div class="fcol"><h5>Get Involved</h5><a href="#">Donate Goods</a><a href="#">Donate Money</a><a href="#">Volunteer</a><a href="#">Apply to the Program</a></div>
+      <div class="fcol"><h5>About</h5><a href="#">Our Mission</a><a href="#">Our Programs</a><a href="#">Contact</a><a href="#">Cakeable Charlotte</a></div>
+    </div>
+    <div class="fbot">
+      <span>© 2026 ZABS Place. A 501(c)(3) nonprofit. All rights reserved.</span>
+      <div class="fsoc">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 22v-8h3l1-4h-4V8c0-1 .5-2 2-2h2V2.2C18 2 16.7 2 15.5 2 12.9 2 11 3.7 11 6.7V10H8v4h3v8Z"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.3 1.7 3.8 4 4v3c-1.5 0-2.9-.5-4-1.3V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.2A3 3 0 1 0 13 15V3Z"/></svg></a>
+      </div>
+    </div>
+  </div></footer>
+
+</body>
+</html>

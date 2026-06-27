@@ -1,0 +1,6 @@
+# publish only the site — never the raw brand-book extraction or working files
+assets/brand/
+_cards_preview.png
+*.psd
+.DS_Store
+Thumbs.db
